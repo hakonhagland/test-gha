@@ -1,0 +1,38 @@
+name: CI
+
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.10', '5.20', '5.30', '5.36', '5.36-threaded' ]
+        # See options here: https://hub.docker.com/_/perl/tags
+
+    runs-on: ubuntu-latest
+    name: perl ${{matrix.perl}}
+    container: perl:${{matrix.perl}}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Show perl version
+      run: |
+        perl -v
+    - name: Install modules
+      run: |
+        cpanm Devel::Cover::Report::Coveralls
+        cpanm --installdeps --quiet --notest .
+    - name: Show errors on ubuntu
+      if:  ${{ failure() && startsWith( matrix.runner, 'ubuntu-')}}
+      run: |
+         cat /home/runner/.cpanm/work/*/build.log
+    - name: Build module and execute tests
+      env:
+        AUTHOR_TESTING: 1
+        RELEASE_TESTING: 1
+      run: |
+        perl Build.PL
+        ./Build
+        ./Build test
+        cover -test -report coveralls
