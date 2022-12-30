@@ -22,6 +22,7 @@ jobs:
       run: |
         #cpanm --quiet --notest Devel::Cover::Report::Coveralls
         cpanm -v Sub::Name
+        cpanm -v Crypt::Random
         cpanm -v Crypt::OpenPGP
         cpanm -n Crypt::Eksblowfish::Bcrypt
         cpanm DBIx::Class::TimeStamp
