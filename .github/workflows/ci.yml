@@ -21,17 +21,17 @@ jobs:
     - name: Install modules
       run: |
         #cpanm --quiet --notest Devel::Cover::Report::Coveralls
-        cpanm -v Sub::Name
-        cpanm -v Crypt::Random
-        cpanm -v Crypt::OpenPGP
-        cpanm -n Crypt::Eksblowfish::Bcrypt
-        cpanm DBIx::Class::TimeStamp
-        cpanm Digest::Whirlpool
+        cpanm --notest --quiet Crypt::Random  # Needed by Crypt::OpenPGP
+
+        # Needed to test DBIx::Class::EncodedColumn::Crypt::OpenPGP
+        cpanm --notest --quiet Crypt::OpenPGP
+
+        # Needed to test DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt
+        cpanm --notest --quiet Crypt::Eksblowfish::Bcrypt
+
+        cpanm --notest --quiet DBIx::Class::TimeStamp
+        cpanm --notest --quiet Digest::Whirlpool
         cpanm --installdeps --quiet --notest .
-    - name: Show errors on ubuntu
-      if:  ${{ failure() && startsWith( matrix.runner, 'ubuntu-')}}
-      run: |
-         cat /home/runner/.cpanm/work/*/build.log
     - name: Build module and execute tests
       env:
         AUTHOR_TESTING: 1
