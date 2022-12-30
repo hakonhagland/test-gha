@@ -21,9 +21,10 @@ jobs:
     - name: Install modules
       run: |
         #cpanm --quiet --notest Devel::Cover::Report::Coveralls
-        cpanm Crypt::Eksblowfish::Bcrypt
+        cpanm -v Sub::Name
+        cpanm -v Crypt::OpenPGP
+        cpanm -n Crypt::Eksblowfish::Bcrypt
         cpanm DBIx::Class::TimeStamp
-        cpanm Crypt::OpenPGP
         cpanm Digest::Whirlpool
         cpanm --installdeps --quiet --notest .
     - name: Show errors on ubuntu
