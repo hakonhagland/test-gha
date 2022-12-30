@@ -22,7 +22,7 @@ jobs:
       run: |
         #cpanm --quiet --notest Devel::Cover::Report::Coveralls
         cpanm Crypt::Eksblowfish::Bcrypt
-        capnm DBIx::Class::TimeStamp
+        cpanm DBIx::Class::TimeStamp
         cpanm Crypt::OpenPGP
         cpanm Digest::Whirlpool
         cpanm --installdeps --quiet --notest .
