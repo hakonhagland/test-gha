@@ -15,13 +15,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
     - name: Show perl version
       run: |
         perl -v
     - name: Install modules
       run: |
-        cpanm Devel::Cover::Report::Coveralls
+        #cpanm --quiet --notest Devel::Cover::Report::Coveralls
+        cpanm Crypt::Eksblowfish::Bcrypt
+        capnm DBIx::Class::TimeStamp
+        cpanm Crypt::OpenPGP
+        cpanm Digest::Whirlpool
         cpanm --installdeps --quiet --notest .
     - name: Show errors on ubuntu
       if:  ${{ failure() && startsWith( matrix.runner, 'ubuntu-')}}
